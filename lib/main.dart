@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  const envFileName = "environment/${const String.fromEnvironment('profile')}.env";
+  await dotenv.load(fileName: envFileName);
+
   runApp(const MyApp());
 }
 
