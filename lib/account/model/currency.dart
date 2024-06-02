@@ -3,13 +3,14 @@ class Currency {
   final String symbol;
   final String name;
 
-  Currency({
+  const Currency({
     required this.code,
     required this.symbol,
     required this.name
   });
 
   factory Currency.fromJson(Map<String, dynamic> json) {
+    print("currency " + json.toString());
     return switch(json) {
       {
       'code': String code,

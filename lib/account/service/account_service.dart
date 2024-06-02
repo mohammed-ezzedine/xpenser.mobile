@@ -10,6 +10,10 @@ class AccountService {
 
   AccountService(this.client);
 
+  factory AccountService.init() {
+    return AccountService(http.Client());
+  }
+
   Future<List<AccountSummary>> fetchAccounts() async {
     var response = await client.get(Uri.parse('${dotenv.env["API_URL"]}/accounts'));
     if (response.statusCode == 200) {
