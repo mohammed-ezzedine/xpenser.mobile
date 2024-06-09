@@ -10,7 +10,6 @@ class Currency {
   });
 
   factory Currency.fromJson(Map<String, dynamic> json) {
-    print("currency " + json.toString());
     return switch(json) {
       {
       'code': String code,

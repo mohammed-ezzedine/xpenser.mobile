@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xpenser_mobile/account/model/account_summary.dart';
 import 'package:intl/intl.dart';
+import 'package:xpenser_mobile/account/widget/account_transactions.dart';
+
+import '../page/account_details.dart';
 
 
 class AccountSummaryWidget extends StatelessWidget {
@@ -15,14 +18,21 @@ class AccountSummaryWidget extends StatelessWidget {
       name: '',
     );
 
-    return Card(
-      elevation: 4,
-      child: Container(
-        // width: double.infinity,
-        // height: 80,
-        width: 200,
-        padding: const EdgeInsets.all(20),
-        child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AccountDetailsPage(accountSummary: accountSummary)),
+        );
+      },
+      child: Card(
+        elevation: 4,
+        child: Container(
+          // width: double.infinity,
+          // height: 80,
+          width: 200,
+          padding: const EdgeInsets.all(20),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -40,13 +50,14 @@ class AccountSummaryWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    accountSummary.budget.currency.code
+                      accountSummary.budget.currencyCode
                   )
                 ],
               )
             ],
           ),
         ),
+      ),
     );
   }
 }
