@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:xpenser_mobile/account/model/transaction.dart';
 import 'request/deposit_money_request.dart';
 import '../model/account_summary.dart';
+import 'request/withdraw_money_request.dart';
 
 class AccountService {
 
@@ -48,7 +49,35 @@ class AccountService {
         return Transaction.fromJson(data as Map<String, dynamic>);
       }).toList();
     } else {
-      throw Exception('Failed to load account transactions ' + response.body);
+      throw Exception('Failed to load account transactions ${response.body}');
     }
+  }
+
+  Future<bool> depositMoneyIntoAccount(String accountId, DepositMoneyRequest request) async {
+    var response = await client.post(Uri.parse('$apiUrl/accounts/$accountId/transactions/deposit'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(request.toJson()));
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    throw Exception("Failed to deposit money into account. ${response.body}");
+  }
+
+  Future<bool> withdrawMoneyFromAccount(String accountId, WithdrawMoneyRequest request) async {
+    var response = await client.post(Uri.parse('$apiUrl/accounts/$accountId/transactions/withdraw'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(request.toJson()));
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    throw Exception("Failed to withdraw money from account. ${response.body}");
   }
 }

@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xpenser_mobile/account/service/account_service.dart';
+import 'package:xpenser_mobile/account/service/request/deposit_money_request.dart';
+import 'package:xpenser_mobile/account/service/request/withdraw_money_request.dart';
 
 import 'account_service_test.mocks.dart';
 
@@ -93,7 +95,7 @@ void main() async {
 
       var requestJson = {
         "note": "some-note",
-        "amount": 10.0
+        "amount": "10.0"
       };
 
       var headers = {
@@ -107,6 +109,31 @@ void main() async {
 
       const request = DepositMoneyRequest(note: "some-note", amount: 10);
       bool response = await AccountService(client).depositMoneyIntoAccount("123", request);
+
+      expect(response, true);
+    });
+  });
+
+  group('withdraw money from account', () {
+    test('returns true when the http call completes successfully', () async {
+      final client = MockClient();
+
+      var requestJson = {
+        "note": "some-note",
+        "amount": "10.0"
+      };
+
+      var headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+
+      when(client.post(Uri.parse('http://apiUrl/accounts/123/transactions/withdraw'),
+          headers: headers,
+          body: jsonEncode(requestJson)
+      )).thenAnswer((_) => Future.value(http.Response('', 200)));
+
+      const request = WithdrawMoneyRequest(note: "some-note", amount: 10);
+      bool response = await AccountService(client).withdrawMoneyFromAccount("123", request);
 
       expect(response, true);
     });

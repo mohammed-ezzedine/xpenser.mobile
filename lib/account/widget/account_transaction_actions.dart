@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xpenser_mobile/account/page/deposit_money.dart';
+import 'package:xpenser_mobile/account/page/withdraw_money.dart';
 
 class AccountTransactionActions extends StatefulWidget {
   const AccountTransactionActions({super.key, required this.accountId});
@@ -23,6 +24,16 @@ class _AccountTransactionActionsState extends State<AccountTransactionActions> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DepositMoneyPage(accountId: widget.accountId)),
+            ).then((_) => setState(() {}));
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.arrow_downward),
+          tooltip: 'Withdraw money from the account',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WithdrawMoneyPage(accountId: widget.accountId)),
             ).then((_) => setState(() {}));
           },
         ),

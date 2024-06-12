@@ -38,7 +38,6 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
           return Container(
             padding: const EdgeInsets.all(20),
             child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 20),
