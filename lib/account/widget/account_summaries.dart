@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:xpenser_mobile/account/widget/account_summary.dart';
+import 'package:xpenser_mobile/account/widget/new_account.dart';
 
 import '../model/account_summary.dart';
 import '../service/account_service.dart';
@@ -31,9 +32,7 @@ class _AccountSummariesWidgetState extends State<AccountSummariesWidget> {
           child: ListView(
             padding: const EdgeInsets.only(left: 20, right: 20),
             scrollDirection: Axis.horizontal,
-            children: placeholder.data!.map((a) {
-              return AccountSummaryWidget(accountSummary: a);
-            }).toList(),
+            children: getAccountsWidgets(placeholder.data!),
           ),
         );
       } else if (placeholder.hasError) {
@@ -42,5 +41,10 @@ class _AccountSummariesWidgetState extends State<AccountSummariesWidget> {
         return const CircularProgressIndicator();
       }
     });
+  }
+
+  List<Widget> getAccountsWidgets(List<AccountSummary> accounts) {
+    Iterable<Widget> widgets = accounts.map((a) => AccountSummaryWidget(accountSummary: a));
+    return widgets.followedBy([const NewAccountWidget()]).toList();
   }
 }

@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:xpenser_mobile/account/service/account_service.dart';
+import 'package:xpenser_mobile/account/service/request/account_opening_request.dart';
 import 'package:xpenser_mobile/account/service/request/deposit_money_request.dart';
 import 'package:xpenser_mobile/account/service/request/withdraw_money_request.dart';
 
@@ -86,6 +87,32 @@ void main() async {
       expect(transactions.first.balance, 93.2);
       expect(transactions.first.note, "some-note");
       expect(transactions.first.timestamp, DateTime.fromMillisecondsSinceEpoch(1717321158742));
+    });
+  });
+
+  group('open a new account', () {
+    test('returns the id of the newly created account when the http call completes successfully', () async {
+      final client = MockClient();
+      var headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      };
+
+      var request = { 
+          "name": "account-name", 
+          "currency": "USD", 
+          "initialAmount": 123.0
+        };
+
+      var response = '''{
+        "id": "account-id"
+      }''';
+      when(client.post(Uri.parse('http://apiUrl/accounts/'),
+        headers: headers,
+        body: jsonEncode(request)
+      )).thenAnswer((_) => Future.value(http.Response(response, 200)));
+
+      var openAccount = await AccountService(client).openAccount(const AccountOpeningRequest(name: "account-name", currency: "USD", initialAmount: 123.0));
+      expect(openAccount.id, "account-id");
     });
   });
 
