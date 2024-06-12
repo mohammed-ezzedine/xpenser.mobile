@@ -26,10 +26,10 @@ class _AccountSummariesWidgetState extends State<AccountSummariesWidget> {
   Widget build(BuildContext context) {
     return FutureBuilder(future: accountSummaries, builder: (context, placeholder) {
       if (placeholder.hasData) {
-        return Container(
+        return SizedBox(
           height: 150,
           child: ListView(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             scrollDirection: Axis.horizontal,
             children: placeholder.data!.map((a) {
               return AccountSummaryWidget(accountSummary: a);

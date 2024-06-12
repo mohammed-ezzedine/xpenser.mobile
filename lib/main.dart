@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:xpenser_mobile/account/widget/account_summaries.dart';
 
 void main() async {
-  const envFileName = "environment/${const String.fromEnvironment('profile', defaultValue: "production")}.env";
+  const envFileName = "environment/${const String.fromEnvironment('profile')}.env";
   await dotenv.load(fileName: envFileName);
 
   runApp(const MyApp());

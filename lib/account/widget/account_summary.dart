@@ -22,7 +22,7 @@ class AccountSummaryWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AccountDetailsPage(accountSummary: accountSummary)),
+          MaterialPageRoute(builder: (context) => AccountDetailsPage(accountId: accountSummary.id)),
         );
       },
       child: Card(

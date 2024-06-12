@@ -26,18 +26,27 @@ class _AccountTransactionsWidgetState extends State<AccountTransactionsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: transactions, builder: (future, placeholder) {
-      if (placeholder.hasData) {
-        return Column(
-          children: placeholder.data!.map((transaction) {
-            return TransactionWidget(transaction: transaction);
-          }).toList(),
-        );
-      } else if (placeholder.hasError) {
-        return const Text('Failed to fetch the account transactions ');
-      } else {
-        return const CircularProgressIndicator();
-      }
-    });
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Transactions",
+          style: TextStyle(fontSize: 20),
+        ),
+        FutureBuilder(future: transactions, builder: (future, placeholder) {
+          if (placeholder.hasData) {
+            return Column(
+              children: placeholder.data!.map((transaction) {
+                return TransactionWidget(transaction: transaction);
+              }).toList(),
+            );
+          } else if (placeholder.hasError) {
+            return const Text('Failed to fetch the account transactions ');
+          } else {
+            return const CircularProgressIndicator();
+          }
+        }),
+      ],
+    );
   }
 }
