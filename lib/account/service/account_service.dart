@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:xpenser_mobile/account/model/transaction.dart';
+
+import '../model/account_summary.dart';
 import 'request/account_opening_request.dart';
 import 'request/deposit_money_request.dart';
-import '../model/account_summary.dart';
+import 'request/transfer_money_request.dart';
 import 'request/withdraw_money_request.dart';
 import 'response/account_opening_response.dart';
 
@@ -32,6 +34,11 @@ class AccountService {
     } else {
       throw Exception('Failed to load accounts data');
     }
+  }
+
+  Future<List<AccountSummary>> fetchAccountsExcluding(String accountId) async {
+    var accounts = await fetchAccounts();
+    return accounts.where((a) => a.id != accountId).toList();
   }
 
   Future<AccountSummary> fetchAccountDetails(String accountId) async {
@@ -95,5 +102,19 @@ class AccountService {
     }
 
     throw Exception("Failed to withdraw money from account. ${response.body}");
+  }
+
+  Future<bool> transferMoneyToAnotherAccount(String accountId, TransferMoneyRequest request) async {
+    var response = await client.post(Uri.parse('$apiUrl/accounts/$accountId/transactions/transfer'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(request.toJson()));
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    throw Exception("Failed to transfer money from account. ${response.body}");
   }
 }

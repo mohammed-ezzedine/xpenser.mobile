@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xpenser_mobile/account/model/account_summary.dart';
 import 'package:intl/intl.dart';
-import 'package:xpenser_mobile/account/widget/account_transactions.dart';
+import 'package:xpenser_mobile/account/model/account_summary.dart';
 
 import '../page/account_details.dart';
 

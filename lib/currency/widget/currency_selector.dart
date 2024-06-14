@@ -35,8 +35,10 @@ class _CurrencySelectorState extends State<CurrencySelector> {
                 }).toList(),
                 value: selectedCurrency,
                 onChanged: (currency) {
-                  selectedCurrency = currency.toString();
-                  widget.onChanged(currency?.toString());
+                 setState(() {
+                   selectedCurrency = currency.toString();
+                   widget.onChanged(currency?.toString());
+                 });
                 },
                 elevation: 16,
                 underline: Container(
