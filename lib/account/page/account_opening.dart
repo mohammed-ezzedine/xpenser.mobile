@@ -3,6 +3,7 @@ import 'package:xpenser_mobile/account/page/account_details.dart';
 import 'package:xpenser_mobile/account/service/account_service.dart';
 import 'package:xpenser_mobile/account/service/request/account_opening_request.dart';
 import 'package:xpenser_mobile/account/service/response/account_opening_response.dart';
+import 'package:xpenser_mobile/currency/widget/currency_selector.dart';
 
 class AccountOpeningPage extends StatefulWidget {
   const AccountOpeningPage({super.key});
@@ -14,8 +15,9 @@ class AccountOpeningPage extends StatefulWidget {
 class _AccountOpeningPageState extends State<AccountOpeningPage> {
 
   final nameController = TextEditingController();
-  final currencyController = TextEditingController();
+  // final currencyController = TextEditingController();
   final amountController = TextEditingController(text: "0");
+  String? selectedCurrency;
   Future<AccountOpeningResponse>? response;
   bool isLoading = false;
   String? error = null;
@@ -54,14 +56,19 @@ class _AccountOpeningPageState extends State<AccountOpeningPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextFormField(
-                  controller: currencyController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: 'Enter currency of the account',
-                  ),
-                  keyboardType: TextInputType.text,
+                child: CurrencySelector(
+                  onChanged: (currency) {
+                    selectedCurrency = currency;
+                  },
                 ),
+                // child: TextFormField(
+                //   controller: currencyController,
+                //   decoration: const InputDecoration(
+                //     border: UnderlineInputBorder(),
+                //     hintText: 'Enter currency of the account',
+                //   ),
+                //   keyboardType: TextInputType.text,
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -103,7 +110,7 @@ class _AccountOpeningPageState extends State<AccountOpeningPage> {
 
     AccountService.init().openAccount(AccountOpeningRequest(
         name: nameController.text,
-        currency: currencyController.text,
+        currency: selectedCurrency!,
         initialAmount: double.parse(amountController.text)
     )).then((response) {
       setState(() {
