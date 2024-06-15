@@ -10,10 +10,10 @@ class AccountSummariesWidget extends StatefulWidget {
   const AccountSummariesWidget({super.key});
 
   @override
-  State<AccountSummariesWidget> createState() => _AccountSummariesWidgetState();
+  State<AccountSummariesWidget> createState() => AccountSummariesWidgetState();
 }
 
-class _AccountSummariesWidgetState extends State<AccountSummariesWidget> {
+class AccountSummariesWidgetState extends State<AccountSummariesWidget> {
 
   late Future<List<AccountSummary>> accountSummaries;
 
@@ -21,6 +21,12 @@ class _AccountSummariesWidgetState extends State<AccountSummariesWidget> {
   void initState() {
     super.initState();
     accountSummaries = AccountService.init().fetchAccounts();
+  }
+
+  void refreshData() {
+    setState(() {
+      accountSummaries = AccountService.init().fetchAccounts();
+    });
   }
 
   @override
@@ -38,7 +44,9 @@ class _AccountSummariesWidgetState extends State<AccountSummariesWidget> {
       } else if (placeholder.hasError) {
         return Text("Error: ${placeholder.error!}");
       } else {
-        return const CircularProgressIndicator();
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       }
     });
   }

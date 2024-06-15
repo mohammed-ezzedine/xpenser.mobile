@@ -16,6 +16,7 @@ class AccountDetailsPage extends StatefulWidget {
 }
 
 class _AccountDetailsPageState extends State<AccountDetailsPage> {
+  final GlobalKey<AccountTransactionsWidgetState> _transactionsKey = GlobalKey();
 
   late Future<AccountSummary> accountSummary;
 
@@ -33,35 +34,43 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Account Details"),
       ),
-      body: FutureBuilder(future: accountSummary, builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Container(
-            padding: const EdgeInsets.all(20),
-            child: ListView(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: AccountDetailsSection(accountSummary: snapshot.data!),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: AccountTransactionActions(accountId: snapshot.data!.id),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: AccountTransactionsWidget(accountId: snapshot.data!.id),
-                ),
-              ],
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return const Center(
-            child: Text("Failed to fetch the account details."),
-          );
-        }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            accountSummary = AccountService.init().fetchAccountDetails(widget.accountId);
+            _transactionsKey.currentState?.refreshData();
+          });
+        },
+        child: FutureBuilder(future: accountSummary, builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              padding: const EdgeInsets.all(20),
+              child: ListView(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: AccountDetailsSection(accountSummary: snapshot.data!),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: AccountTransactionActions(accountId: snapshot.data!.id),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: AccountTransactionsWidget(accountId: snapshot.data!.id, key: _transactionsKey),
+                  ),
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Failed to fetch the account details."),
+            );
+          }
 
-        return const Center(child: CircularProgressIndicator());
-      }),
+          return const Center(child: CircularProgressIndicator());
+        }),
+      ),
     );
   }
 }

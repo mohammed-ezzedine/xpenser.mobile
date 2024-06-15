@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:xpenser_mobile/account/service/account_service.dart';
 import 'package:xpenser_mobile/account/widget/transaction.dart';
 
@@ -11,16 +10,20 @@ class AccountTransactionsWidget extends StatefulWidget {
   final String accountId;
 
   @override
-  State<AccountTransactionsWidget> createState() => _AccountTransactionsWidgetState();
+  State<AccountTransactionsWidget> createState() => AccountTransactionsWidgetState();
 }
 
-class _AccountTransactionsWidgetState extends State<AccountTransactionsWidget> {
+class AccountTransactionsWidgetState extends State<AccountTransactionsWidget> {
 
   late Future<List<Transaction>> transactions;
 
   @override
   void initState() {
     super.initState();
+    transactions = AccountService.init().fetchAccountTransactions(widget.accountId);
+  }
+
+  void refreshData() {
     transactions = AccountService.init().fetchAccountTransactions(widget.accountId);
   }
 
