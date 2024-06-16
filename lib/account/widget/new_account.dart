@@ -20,14 +20,14 @@ class NewAccountWidget extends StatelessWidget {
           child: Container(
             width: 200,
             padding: const EdgeInsets.all(20),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "New Account",
-                  style: TextStyle(fontSize: 16),
+                  style: Theme.of(context).primaryTextTheme.titleLarge
                 ),
-                Icon(Icons.add)
+                const Icon(Icons.add)
               ],
             ),
           ),

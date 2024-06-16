@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xpenser_mobile/account/service/account_service.dart';
-import 'package:xpenser_mobile/account/service/request/deposit_money_request.dart';
 import 'package:xpenser_mobile/account/service/request/withdraw_money_request.dart';
+import 'package:xpenser_mobile/expense/widget/expense_category_selector.dart';
 
 class WithdrawMoneyPage extends StatefulWidget {
   const WithdrawMoneyPage({super.key, required this.accountId});
@@ -30,10 +30,10 @@ class _WithdrawMoneyPageState extends State<WithdrawMoneyPage> {
         child: (response == null) ? Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 20),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
               child: Text("Withdraw Money From Account",
-                style: TextStyle(fontSize: 20),
+                style: Theme.of(context).primaryTextTheme.headlineSmall
               ),
             ),
             Padding(
@@ -45,6 +45,14 @@ class _WithdrawMoneyPageState extends State<WithdrawMoneyPage> {
                   hintText: 'Enter an amount to withdraw',
                 ),
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: ExpenseCategorySelector(
+                onChanged: (category) {
+                  print("selected category $category");
+                },
               ),
             ),
             Padding(

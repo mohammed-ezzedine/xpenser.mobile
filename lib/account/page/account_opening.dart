@@ -37,10 +37,10 @@ class _AccountOpeningPageState extends State<AccountOpeningPage> {
           : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 20),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Text("Create New Account",
-                  style: TextStyle(fontSize: 20),
+                  style: Theme.of(context).primaryTextTheme.headlineSmall
                 ),
               ),
               Padding(

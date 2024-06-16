@@ -1,5 +1,5 @@
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../model/account_summary.dart';
@@ -24,7 +24,7 @@ class AccountDetailsSection extends StatelessWidget {
       children: [
         Text(
           accountSummary.name,
-          style: const TextStyle(fontSize: 20),
+          style: Theme.of(context).primaryTextTheme.headlineSmall
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -33,7 +33,7 @@ class AccountDetailsSection extends StatelessWidget {
               margin: const EdgeInsets.only(right: 5),
               child: Text(
                 formatCurrency.format(accountSummary.budget.amount),
-                style: const TextStyle(fontSize: 20),
+                style: Theme.of(context).primaryTextTheme.headlineSmall
               ),
             ),
             Text(accountSummary.budget.currencyCode)

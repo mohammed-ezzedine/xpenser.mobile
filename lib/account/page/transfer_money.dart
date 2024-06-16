@@ -30,10 +30,10 @@ class _TransferMoneyPageState extends State<TransferMoneyPage> {
         child: (response == null) ? Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
             child: Text("Transfer Money Into Account",
-              style: TextStyle(fontSize: 20),
+              style: Theme.of(context).primaryTextTheme.headlineSmall
             ),
           ),
           Padding(

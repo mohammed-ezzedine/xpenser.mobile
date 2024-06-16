@@ -32,9 +32,9 @@ class AccountTransactionsWidgetState extends State<AccountTransactionsWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Transactions",
-          style: TextStyle(fontSize: 20),
+          style: Theme.of(context).primaryTextTheme.headlineSmall
         ),
         FutureBuilder(future: transactions, builder: (future, placeholder) {
           if (placeholder.hasData) {

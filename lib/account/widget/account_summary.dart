@@ -35,7 +35,7 @@ class AccountSummaryWidget extends StatelessWidget {
             children: [
               Text(
                 accountSummary.name,
-                style: const TextStyle(fontSize: 16),
+                  style: Theme.of(context).primaryTextTheme.titleMedium
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -43,8 +43,8 @@ class AccountSummaryWidget extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(right: 5),
                     child: Text(
-                      formatCurrency.format(accountSummary.budget.amount),
-                      style: const TextStyle(fontSize: 16),
+                      formatNumber(formatCurrency),
+                      style: Theme.of(context).primaryTextTheme.headlineSmall
                     ),
                   ),
                   Text(
@@ -57,6 +57,21 @@ class AccountSummaryWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatNumber(NumberFormat formatCurrency) {
+    var amount = accountSummary.budget.amount;
+    String suffix = "";
+    if (amount > 1000000) {
+      amount = amount / 1000000;
+      suffix = "M";
+    }
+    else if (amount > 1000) {
+      amount = amount / 1000.0;
+      suffix = "K";
+    }
+
+    return formatCurrency.format(amount) + suffix;
   }
 }
 

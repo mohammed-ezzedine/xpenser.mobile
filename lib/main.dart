@@ -16,13 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Xpenser',
-      theme: ThemeData(
+      theme: ThemeData.from(
         colorScheme: ColorScheme.dark(
           background: Colors.black,
-          surface: Colors.white10
-        ),
-        brightness: Brightness.dark,
-        useMaterial3: true,
+       )
       ),
       home: const MyHomePage(title: 'Xpenser'),
     );
