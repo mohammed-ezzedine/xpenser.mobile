@@ -202,7 +202,8 @@ void main() async {
 
       var requestJson = {
         "note": "some-note",
-        "amount": "10.0"
+        "amount": "10.0",
+        "category": "some-category"
       };
 
       var headers = {
@@ -214,7 +215,7 @@ void main() async {
           body: jsonEncode(requestJson)
       )).thenAnswer((_) => Future.value(http.Response('', 200)));
 
-      const request = WithdrawMoneyRequest(note: "some-note", amount: 10);
+      const request = WithdrawMoneyRequest(note: "some-note", amount: 10, category: "some-category");
       bool response = await AccountService(client).withdrawMoneyFromAccount("123", request);
 
       expect(response, true);

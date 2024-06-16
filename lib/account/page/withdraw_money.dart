@@ -16,6 +16,7 @@ class _WithdrawMoneyPageState extends State<WithdrawMoneyPage> {
 
   final amountController = TextEditingController();
   final descriptionController = TextEditingController();
+  String? selectedCategory;
   Future<bool>? response;
 
 
@@ -51,7 +52,7 @@ class _WithdrawMoneyPageState extends State<WithdrawMoneyPage> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: ExpenseCategorySelector(
                 onChanged: (category) {
-                  print("selected category $category");
+                  selectedCategory = category;
                 },
               ),
             ),
@@ -74,7 +75,11 @@ class _WithdrawMoneyPageState extends State<WithdrawMoneyPage> {
                   child: const Text("Submit"),
                   onPressed: () {
                     setState(() {
-                      response = AccountService.init().withdrawMoneyFromAccount(widget.accountId, WithdrawMoneyRequest(note: descriptionController.text, amount: double.parse(amountController.text)));
+                      response = AccountService.init().withdrawMoneyFromAccount(widget.accountId, WithdrawMoneyRequest(
+                          note: descriptionController.text,
+                          amount: double.parse(amountController.text),
+                          category: selectedCategory!
+                      ));
                     });
                   },
                 ),

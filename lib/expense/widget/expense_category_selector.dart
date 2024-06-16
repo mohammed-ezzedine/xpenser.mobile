@@ -30,6 +30,8 @@ class _ExpenseCategorySelectorState extends State<ExpenseCategorySelector> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DropdownButton(
+              hint: const Text("Pick a category"),
+              isExpanded: true,
               items: snapshot.data!.map<DropdownMenuItem<String>>((category) {
                 return DropdownMenuItem(
                     value: category.id,
@@ -44,9 +46,10 @@ class _ExpenseCategorySelectorState extends State<ExpenseCategorySelector> {
                 });
               },
               elevation: 16,
+
               underline: Container(
                 height: 1,
-                color: Theme.of(context).dividerColor,
+                color: Theme.of(context).indicatorColor,
               ),
             );
           } else if (snapshot.hasError) {
