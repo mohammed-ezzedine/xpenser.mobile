@@ -30,7 +30,8 @@ class _AccountSelectorWidgetState extends State<AccountSelectorWidget> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return DropdownButton(
-            items: snapshot.data!.map<DropdownMenuItem<String>>((account) {
+            hint: const Text("Pick the destination account"),
+            isExpanded: true, items: snapshot.data!.map<DropdownMenuItem<String>>((account) {
               return DropdownMenuItem(
                   value: account.id,
                   child: Text(account.name)

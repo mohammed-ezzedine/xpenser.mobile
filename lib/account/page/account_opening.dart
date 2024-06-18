@@ -15,8 +15,7 @@ class AccountOpeningPage extends StatefulWidget {
 class _AccountOpeningPageState extends State<AccountOpeningPage> {
 
   final nameController = TextEditingController();
-  // final currencyController = TextEditingController();
-  final amountController = TextEditingController(text: "0");
+  final amountController = TextEditingController();
   String? selectedCurrency;
   Future<AccountOpeningResponse>? response;
   bool isLoading = false;
@@ -61,14 +60,6 @@ class _AccountOpeningPageState extends State<AccountOpeningPage> {
                     selectedCurrency = currency;
                   },
                 ),
-                // child: TextFormField(
-                //   controller: currencyController,
-                //   decoration: const InputDecoration(
-                //     border: UnderlineInputBorder(),
-                //     hintText: 'Enter currency of the account',
-                //   ),
-                //   keyboardType: TextInputType.text,
-                // ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -111,7 +102,7 @@ class _AccountOpeningPageState extends State<AccountOpeningPage> {
     AccountService.init().openAccount(AccountOpeningRequest(
         name: nameController.text,
         currency: selectedCurrency!,
-        initialAmount: double.parse(amountController.text)
+        initialAmount: amountController.text.isNotEmpty ? double.parse(amountController.text) : 0
     )).then((response) {
       setState(() {
         isLoading = false;

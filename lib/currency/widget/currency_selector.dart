@@ -27,6 +27,8 @@ class _CurrencySelectorState extends State<CurrencySelector> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DropdownButton(
+                hint: const Text("Pick a currency"),
+                isExpanded: true,
                 items: snapshot.data!.map<DropdownMenuItem<String>>((currency) {
                   return DropdownMenuItem(
                     value: currency,
