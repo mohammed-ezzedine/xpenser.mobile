@@ -46,26 +46,28 @@ class ExpenseCategoriesSummaryState extends State<ExpenseCategoriesSummary> {
               style: Theme.of(context).primaryTextTheme.headlineSmall
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
+        SizedBox(
+          height: 30,
+          child:  ListView(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            scrollDirection: Axis.horizontal,
             children: getCategoriesIcons(context),
           ),
-        ),
-
+        )
       ],
     );
   }
 
   List<Widget> getCategoriesIcons(BuildContext context) {
     List<Widget> list = [];
-    list.addAll(categories.map((c) => ExpenseCategoryIcon(category: c)));
     list.add(IconButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddExpenseCategoryPage()));
         },
-        icon: const Icon(Icons.add)
+        icon: const Icon(Icons.add),
+        color: Theme.of(context).hintColor,
     ));
+    list.addAll(categories.map((c) => ExpenseCategoryIcon(category: c)));
 
     return list;
   }
