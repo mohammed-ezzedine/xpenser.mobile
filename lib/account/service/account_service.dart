@@ -51,7 +51,7 @@ class AccountService {
   }
 
   Future<AccountOpeningResponse> openAccount(AccountOpeningRequest request) async {
-    var response = await client.post(Uri.parse('$apiUrl/accounts/open'),
+    var response = await client.post(Uri.parse('$apiUrl/accounts/open/regular'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },

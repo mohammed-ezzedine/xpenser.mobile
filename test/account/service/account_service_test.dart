@@ -161,7 +161,7 @@ void main() async {
       var response = '''{
         "id": "account-id"
       }''';
-      when(client.post(Uri.parse('http://apiUrl/accounts/open'),
+      when(client.post(Uri.parse('http://apiUrl/accounts/open/regular'),
         headers: headers,
         body: jsonEncode(request)
       )).thenAnswer((_) => Future.value(http.Response(response, 200)));
