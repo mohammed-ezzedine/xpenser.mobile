@@ -177,7 +177,8 @@ void main() async {
 
       var requestJson = {
         "note": "some-note",
-        "amount": "10.0"
+        "amount": "10.0",
+        "timestamp": null
       };
 
       var headers = {
@@ -189,7 +190,31 @@ void main() async {
           body: jsonEncode(requestJson)
       )).thenAnswer((_) => Future.value(http.Response('', 200)));
 
-      const request = DepositMoneyRequest(note: "some-note", amount: 10);
+      var request = DepositMoneyRequest(note: "some-note", amount: 10);
+      bool response = await AccountService(client).depositMoneyIntoAccount("123", request);
+
+      expect(response, true);
+    });
+
+    test('passes the timestamp with the api request when the user specifies it', () async {
+      final client = MockClient();
+
+      var requestJson = {
+        "note": "some-note",
+        "amount": "10.0",
+        "timestamp": "2024-04-23T00:00:00.000Z"
+      };
+
+      var headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+
+      when(client.post(Uri.parse('http://apiUrl/accounts/123/transactions/deposit'),
+          headers: headers,
+          body: jsonEncode(requestJson)
+      )).thenAnswer((_) => Future.value(http.Response('', 200)));
+
+      var request = DepositMoneyRequest(note: "some-note", amount: 10, timestamp: DateTime.utc(2024, 4, 23));
       bool response = await AccountService(client).depositMoneyIntoAccount("123", request);
 
       expect(response, true);
@@ -203,7 +228,8 @@ void main() async {
       var requestJson = {
         "note": "some-note",
         "amount": "10.0",
-        "category": "some-category"
+        "category": "some-category",
+        "timestamp": null
       };
 
       var headers = {
@@ -215,7 +241,32 @@ void main() async {
           body: jsonEncode(requestJson)
       )).thenAnswer((_) => Future.value(http.Response('', 200)));
 
-      const request = WithdrawMoneyRequest(note: "some-note", amount: 10, category: "some-category");
+      var request = WithdrawMoneyRequest(note: "some-note", amount: 10, category: "some-category");
+      bool response = await AccountService(client).withdrawMoneyFromAccount("123", request);
+
+      expect(response, true);
+    });
+
+    test('passes the timestamp with the api request when the user specifies it', () async {
+      final client = MockClient();
+
+      var requestJson = {
+        "note": "some-note",
+        "amount": "10.0",
+        "category": "some-category",
+        "timestamp": "2024-04-23T00:00:00.000Z"
+      };
+
+      var headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+
+      when(client.post(Uri.parse('http://apiUrl/accounts/123/transactions/withdraw'),
+          headers: headers,
+          body: jsonEncode(requestJson)
+      )).thenAnswer((_) => Future.value(http.Response('', 200)));
+
+      var request = WithdrawMoneyRequest(note: "some-note", amount: 10, category: "some-category", timestamp: DateTime.utc(2024, 4, 23));
       bool response = await AccountService(client).withdrawMoneyFromAccount("123", request);
 
       expect(response, true);
@@ -228,7 +279,8 @@ void main() async {
 
       var requestJson = {
         "destinationAccountId": "some-id",
-        "amount": 10.0
+        "amount": 10.0,
+        "timestamp": null
       };
 
       var headers = {
@@ -240,7 +292,31 @@ void main() async {
           body: jsonEncode(requestJson)
       )).thenAnswer((_) => Future.value(http.Response('', 200)));
 
-      const request = TransferMoneyRequest(destinationAccountId: "some-id", amount: 10);
+      var request = TransferMoneyRequest(destinationAccountId: "some-id", amount: 10);
+      bool response = await AccountService(client).transferMoneyToAnotherAccount("123", request);
+
+      expect(response, true);
+    });
+
+    test('passes the timestamp with the api request when the user specifies it', () async {
+      final client = MockClient();
+
+      var requestJson = {
+        "destinationAccountId": "some-id",
+        "amount": 10.0,
+        "timestamp": "2024-04-23T00:00:00.000Z"
+      };
+
+      var headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+
+      when(client.post(Uri.parse('http://apiUrl/accounts/123/transactions/transfer'),
+          headers: headers,
+          body: jsonEncode(requestJson)
+      )).thenAnswer((_) => Future.value(http.Response('', 200)));
+
+      var request = TransferMoneyRequest(destinationAccountId: "some-id", amount: 10, timestamp: DateTime.utc(2024, 4, 23));
       bool response = await AccountService(client).transferMoneyToAnotherAccount("123", request);
 
       expect(response, true);

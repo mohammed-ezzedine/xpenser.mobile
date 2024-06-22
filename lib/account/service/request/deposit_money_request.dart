@@ -1,16 +1,19 @@
 class DepositMoneyRequest {
   final String note;
   final double amount;
+  DateTime? timestamp;
 
-  const DepositMoneyRequest({
+  DepositMoneyRequest({
     required this.note,
-    required this.amount
+    required this.amount,
+    this.timestamp
   });
 
   Map<String, dynamic> toJson() {
     return {
       "note": note,
-      "amount": amount.toString()
+      "amount": amount.toString(),
+      "timestamp": timestamp?.toIso8601String()
     };
   }
 }
