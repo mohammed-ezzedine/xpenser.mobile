@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:xpenser_mobile/account/widget/account_summaries.dart';
 import 'package:xpenser_mobile/expense/widget/expense_categories_summary.dart';
 
+import 'expense/widget/monthly_report.dart';
+
 void main() async {
   const envFileName = "environment/${const String.fromEnvironment('profile')}.env";
   await dotenv.load(fileName: envFileName);
@@ -58,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
             physics: const AlwaysScrollableScrollPhysics(),
             children: [
               AccountSummariesWidget(key: _accountSummariesKey),
-              ExpenseCategoriesSummary(key: _expenseCategorySummariesKey)
+              ExpenseCategoriesSummary(key: _expenseCategorySummariesKey),
+              MonthlyReportWidget()
             ],
           ),
         ),

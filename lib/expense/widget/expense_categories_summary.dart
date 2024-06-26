@@ -47,7 +47,7 @@ class ExpenseCategoriesSummaryState extends State<ExpenseCategoriesSummary> {
           ),
         ),
         SizedBox(
-          height: 30,
+          height: 35,
           child:  ListView(
             padding: const EdgeInsets.only(left: 20, right: 20),
             scrollDirection: Axis.horizontal,
