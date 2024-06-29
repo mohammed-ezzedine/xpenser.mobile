@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xpenser_mobile/account/service/account_service.dart';
 import 'package:xpenser_mobile/account/service/request/deposit_money_request.dart';
+import 'package:xpenser_mobile/utils/date_picker.dart';
 
 class DepositMoneyPage extends StatefulWidget {
   const DepositMoneyPage({super.key, required this.accountId});
@@ -15,6 +16,7 @@ class _DepositMoneyPageState extends State<DepositMoneyPage> {
 
   final amountController = TextEditingController();
   final descriptionController = TextEditingController();
+  DateTime transactionDate = DateTime.now();
   Future<bool>? response;
 
 
@@ -26,8 +28,7 @@ class _DepositMoneyPageState extends State<DepositMoneyPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: (response == null) ? Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: (response == null) ? ListView(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
@@ -58,6 +59,14 @@ class _DepositMoneyPageState extends State<DepositMoneyPage> {
                 maxLines: null,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: DatePicker(
+                onChanged: (date) {
+                  transactionDate = date;
+                },
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -65,7 +74,12 @@ class _DepositMoneyPageState extends State<DepositMoneyPage> {
                   child: const Text("Submit"),
                   onPressed: () {
                     setState(() {
-                      response = AccountService.init().depositMoneyIntoAccount(widget.accountId, DepositMoneyRequest(note: descriptionController.text, amount: double.parse(amountController.text)));
+                      var request = DepositMoneyRequest(
+                        note: descriptionController.text,
+                        amount: double.parse(amountController.text),
+                        timestamp: transactionDate
+                      );
+                      response = AccountService.init().depositMoneyIntoAccount(widget.accountId, request);
                     });
                   },
                 ),

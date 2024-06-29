@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xpenser_mobile/account/service/request/transfer_money_request.dart';
 import 'package:xpenser_mobile/account/widget/account_selector.dart';
+import 'package:xpenser_mobile/utils/date_picker.dart';
 
 import '../service/account_service.dart';
 
@@ -17,6 +18,7 @@ class _TransferMoneyPageState extends State<TransferMoneyPage> {
 
   final amountController = TextEditingController();
   String? destinationAccountId;
+  DateTime transactionDate = DateTime.now();
   Future<bool>? response;
 
   @override
@@ -27,8 +29,7 @@ class _TransferMoneyPageState extends State<TransferMoneyPage> {
       ),
       body: Container(
       padding: const EdgeInsets.all(20),
-        child: (response == null) ? Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        child: (response == null) ? ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
@@ -56,6 +57,14 @@ class _TransferMoneyPageState extends State<TransferMoneyPage> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: DatePicker(
+              onChanged: (date) {
+                transactionDate = date;
+              },
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -63,7 +72,11 @@ class _TransferMoneyPageState extends State<TransferMoneyPage> {
                 child: const Text("Submit"),
                 onPressed: () {
                   setState(() {
-                    var request = TransferMoneyRequest(destinationAccountId: destinationAccountId!, amount: double.parse(amountController.text));
+                    var request = TransferMoneyRequest(
+                      destinationAccountId: destinationAccountId!,
+                      amount: double.parse(amountController.text),
+                      timestamp: transactionDate
+                    );
                     response = AccountService.init().transferMoneyToAnotherAccount(widget.accountId, request);
                   });
                 },
